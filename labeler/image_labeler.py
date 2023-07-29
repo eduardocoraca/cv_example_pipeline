@@ -42,9 +42,8 @@ class ImageLabeler:
         elif event == cv2.EVENT_LBUTTONDOWN:
             self.current_box.add_point(x, y)
             if self.current_box.is_complete():
-                x0, y0, x1, y1 = self.current_box.get_points()
                 img_copy = self.current_img.copy()
-                rectangle_drawer.draw_from_coord(img_copy, (x0, y0), (x1, y1))
+                rectangle_drawer.draw(img_copy, self.current_box)
                 cv2.imshow(self.current_window, img_copy)
                 cv2.waitKey(0)
 

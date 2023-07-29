@@ -21,6 +21,12 @@ class Rectangle:
             self.x0 = x
             self.y0 = y
 
+    def contains(self, point: Tuple[int, int]) -> bool:
+        """Checks if a point is within the rectangle."""
+
+        x, y = point
+        return (x >= self.x0) and (x <= self.x1) and (y >= self.y0) and (y <= self.y1)
+
     def is_complete(self) -> bool:
         """Checks if the rectangle has 2 defined points."""
 
