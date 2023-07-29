@@ -45,9 +45,10 @@ class RawImageProcessor(ImageProcessor):
     def transform(self, img: type[np.ndarray]) -> type[np.ndarray]:
         """Transforms the raw BGR image to a grayscale and reshaped version."""
 
-        img_cp = img.copy()
+        out_img = img.copy()
         if self.to_gray:
-            out_img = cv2.cvtColor(img_cp, cv2.COLOR_BGR2GRAY)
+            out_img = cv2.cvtColor(out_img, cv2.COLOR_BGR2GRAY)
+
         out_img = cv2.resize(
             out_img, (self.size_x, self.size_y), interpolation=cv2.INTER_AREA
         )
@@ -64,6 +65,9 @@ class ModelImageProcessor(ImageProcessor):
         """Transforms the grayscale image to a torch Tensor."""
 
         x = torch.Tensor(img)
-        x = x.tile(3, 1, 1)
+        if img.ndim == 2:
+            x = x.tile(3, 1, 1)
+        else:
+            x = x.permute(2, 0, 1)
         x = (x - x.min()) / (x.max() - x.min())  # normalizing to [0,1] range
         return x

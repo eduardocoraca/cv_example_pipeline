@@ -2,7 +2,7 @@ import sys
 
 sys.path.append(".")
 
-from common import Rectangle
+from common import Rectangle, RectangleDrawer
 import cv2
 import os
 import numpy as np
@@ -36,20 +36,16 @@ class ImageLabeler:
             os.makedirs(path)
 
     def __draw_and_save(self, event, x: int, y: int, flags, *userdata):
+        rectangle_drawer = RectangleDrawer()
         if event == cv2.EVENT_LBUTTONDBLCLK:
             self.current_box.clear()
         elif event == cv2.EVENT_LBUTTONDOWN:
             self.current_box.add_point(x, y)
             if self.current_box.is_complete():
                 x0, y0, x1, y1 = self.current_box.get_points()
-                rec = cv2.rectangle(
-                    self.current_img.copy(),
-                    (x0, y0),
-                    (x1, y1),
-                    thickness=2,
-                    color=(0, 255, 0),
-                )
-                cv2.imshow(self.current_window, rec)
+                img_copy = self.current_img.copy()
+                rectangle_drawer.draw_from_coord(img_copy, (x0, y0), (x1, y1))
+                cv2.imshow(self.current_window, img_copy)
                 cv2.waitKey(0)
 
         elif event == cv2.EVENT_RBUTTONDOWN:

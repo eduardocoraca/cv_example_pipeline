@@ -46,7 +46,9 @@ class Dataset(torch.utils.data.Dataset):
             img, label = loader.load(filename)
             len_y, len_x, _ = img.shape
             img = raw_processor.transform(img)
-            new_len_y, new_len_x = img.shape
+            img_len = img.shape
+            new_len_y = img_len[0]
+            new_len_x = img_len[1]
 
             # we must rescale the original coordinates to the new shape
             coordinates = label.to_dict()
@@ -80,10 +82,10 @@ class Dataset(torch.utils.data.Dataset):
         self.y += new_y
         self.images += new_images
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.images)
 
-    def __getitem__(self, idx):
+    def __getitem__(self, idx: int) -> Tuple[torch.Tensor, torch.Tensor]:
         x = self.images[idx]
         len_x = x.shape[0]
         len_y = x.shape[1]
