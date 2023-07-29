@@ -19,9 +19,7 @@ class Runner:
         self.logger = logger
         self.wait_seconds = wait_seconds  # waiting time in case of disconnection
         self.max_attemps = max_attempts  # maximum number of attemps to reconnect
-
         self.state = {"attempts_counter": 0, "is_detected": False}
-
         self.events = []  # running list of events
 
     def initialize_capture(self):
