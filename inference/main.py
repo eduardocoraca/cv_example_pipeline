@@ -1,6 +1,18 @@
 from runner import Runner
+from threading import Thread
+from logging import getLogger, basicConfig, RootLogger, INFO
 
-runner = Runner()
-runner.initialize_capture()
-runner.run()
-runner.stop_capture()
+
+def runner_thread(logger: type[RootLogger]):
+    runner = Runner(logger)
+    runner.initialize_capture()
+    runner.run()
+    runner.stop_capture()
+
+
+basicConfig(filename="out.log", encoding="utf-8", level=INFO)
+
+logger = getLogger()
+
+t = Thread(target=runner_thread, args=(logger,))
+t.start()
