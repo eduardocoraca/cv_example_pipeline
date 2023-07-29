@@ -1,4 +1,6 @@
 from typing import Tuple, List, Union
+import numpy as np
+from datetime import datetime
 
 
 class Rectangle:
@@ -61,3 +63,19 @@ class Rectangle:
 
     def get_center(self) -> Tuple[int, int]:
         return int(abs(self.x1 + self.x0) // 2), int(abs(self.y1 + self.y0) // 2)
+
+
+class Event:
+    def __init__(
+        self, timestamp: type[datetime], original_img: np.ndarray, event_img: np.ndarray
+    ):
+        self.original_img = original_img
+        self.event_img = event_img
+        self.timestamp = timestamp
+
+    def to_dict(self) -> dict:
+        return {
+            "timestamp": self.timestamp,
+            "original_img": self.original_img,
+            "event_img": self.event_img,
+        }

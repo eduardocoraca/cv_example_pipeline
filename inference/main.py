@@ -8,6 +8,7 @@ def runner_thread(logger: type[RootLogger]):
     runner.initialize_capture()
     runner.run()
     runner.stop_capture()
+    print(f"Total events: {len(runner.events)}")
 
 
 basicConfig(filename="out.log", encoding="utf-8", level=INFO)
