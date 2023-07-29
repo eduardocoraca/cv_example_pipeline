@@ -9,4 +9,5 @@ def get_model(num_output_features: int) -> type[torch.nn.Module]:
 
     # altering the final layer to provide a 2D output
     model.classifier[-1] = torch.nn.Linear(final_layer_features, num_output_features)
+    model.classifier.append(torch.nn.Sigmoid())
     return model
