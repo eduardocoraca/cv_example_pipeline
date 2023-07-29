@@ -22,7 +22,7 @@ class Runner:
         self.state = {"attempts_counter": 0, "is_detected": False}
         self.events = []  # running list of events
 
-    def initialize_capture(self):
+    def initialize_capture(self) -> None:
         """Initialize video capture via webcam."""
 
         try:
@@ -47,7 +47,9 @@ class Runner:
             self.state["attemps_counter"] += 1
             self.attempt_capture()
 
-    def run(self):
+    def run(self) -> None:
+        """Runs the main loop. It can be stopped by pressing 'q'."""
+
         point_drawer = PointDrawer()
         rectangle_drawer = RectangleDrawer()
         while True:
@@ -101,7 +103,9 @@ class Runner:
 
         cv2.destroyAllWindows()
 
-    def stop_capture(self):
+    def stop_capture(self) -> None:
+        """Stops webcam video flow."""
+
         self.fps.stop()
         self.vs.stop()
         self.logger.info(f"Stopped run at {datetime.now()}")
