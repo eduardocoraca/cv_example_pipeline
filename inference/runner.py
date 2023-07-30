@@ -45,7 +45,7 @@ class Runner:
             self.logger.warning(f"Attempting new capture at {datetime.now()}")
             time.sleep(self.wait_seconds)
             self.state["attempts_counter"] += 1
-            self.attempt_capture()
+            self.__attempt_capture()
 
     def run(self) -> None:
         """Runs the main loop. It can be stopped by pressing 'q'."""
