@@ -18,7 +18,7 @@ class Runner:
         self.model_pipeline = ModelPipeline()
         self.logger = logger
         self.wait_seconds = wait_seconds  # waiting time in case of disconnection
-        self.max_attemps = max_attempts  # maximum number of attemps to reconnect
+        self.max_attempts = max_attempts  # maximum number of attempts to reconnect
         self.state = {"attempts_counter": 0, "is_detected": False}
         self.events = []  # running list of events
 
@@ -39,12 +39,12 @@ class Runner:
         img = self.vs.read()
         success = self.vs.grabbed
         if success:
-            self.attemps_counter = 0
+            self.state["attempts_counter"] = 0
             return img
-        elif self.state["attemps_counter"] <= self.max_attemps:
+        elif self.state["attempts_counter"] <= self.max_attempts:
             self.logger.warning(f"Attempting new capture at {datetime.now()}")
             time.sleep(self.wait_seconds)
-            self.state["attemps_counter"] += 1
+            self.state["attempts_counter"] += 1
             self.attempt_capture()
 
     def run(self) -> None:
